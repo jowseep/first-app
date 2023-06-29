@@ -10,12 +10,15 @@ import { HousingLocation } from '../housinglocation';
 })
 export class DetailsComponent {
 
-  route: ActivatedRoute = inject(ActivatedRoute);
-  housingService = inject(HousingService);
+  housingService: HousingService = inject(HousingService);
   housingLocation: HousingLocation | undefined;
 
-  constructor() {
+  constructor(private route: ActivatedRoute) {
     const housingLocationId = Number(this.route.snapshot.params['id']);
-    this.housingLocation = this.housingService.getAllHousingLocationsById(housingLocationId);
+    
+    this.housingService.getAllHousingLocationById(housingLocationId).then(housingLocation => {
+        this.housingLocation = housingLocation;
+    });
   }
+
 }
